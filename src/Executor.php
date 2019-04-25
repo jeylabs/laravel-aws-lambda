@@ -3,6 +3,7 @@
 namespace Jeylabs\LaravelAwsLambda;
 
 use Exception;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Collection;
 
@@ -26,6 +27,7 @@ class Executor
      * Create executor instance.
      *
      * @param Container $app
+     * @throws BindingResolutionException
      */
     public function __construct(Container $app)
     {
@@ -37,6 +39,7 @@ class Executor
      * Handle the request
      *
      * @param $payload
+     * @return mixed|void
      * @throws Exception
      */
     public function handle($payload)
@@ -47,7 +50,7 @@ class Executor
                 $this->runHandlers($record);
             }
         } else {
-            $this->runHandlers($payload);
+            return $this->runHandlers($payload);
         }
     }
 
