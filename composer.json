@@ -1,0 +1,30 @@
+{
+  "name": "jeylabs/laravel-aws-lambda",
+  "description": "Laravel support for AWS Lambda.",
+  "keywords": [
+    "laravel",
+    "aws",
+    "lambda"
+  ],
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Jeylabs\\LaravelAwsLambda\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Jeylabs\\LaravelAwsLambda\\Test\\": "test"
+    }
+  },
+  "require": {
+    "ext-json": "^1.4",
+    "illuminate/support": "^5.3"
+  },
+  "require-dev": {
+    "laravel/framework": "^5.3"
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
