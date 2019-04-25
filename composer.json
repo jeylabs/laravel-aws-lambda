@@ -17,6 +17,13 @@
       "Jeylabs\\LaravelAwsLambda\\Test\\": "test"
     }
   },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Jeylabs\\LaravelAwsLambda\\LambdaServiceProvider"
+      ]
+    }
+  },
   "require": {
     "ext-json": "^1.4",
     "illuminate/support": "^5.3"
