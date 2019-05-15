@@ -17,21 +17,16 @@ class Gateway extends Handler
      */
     public function canHandle()
     {
-        $requiredKeys = ['body', 'path', 'headers', 'requestContext'];
-        foreach ($requiredKeys as $requiredKey) {
-            if (!array_key_exists($requiredKey, $this->payload)) {
-                return false;
-            }
+        if (
+            array_key_exists('body', $this->payload) &&
+            array_key_exists('path', $this->payload) &&
+            array_key_exists('headers', $this->payload) &&
+            array_key_exists('requestContext', $this->payload) &&
+            !array_key_exists('elb', $this->payload['requestContext'])
+        ) {
+            return true;
         }
-
-        $invalidContextKeys = ['elb', 'requestContext'];
-        foreach ($invalidContextKeys as $invalidContextKey) {
-            if (array_key_exists($invalidContextKey, $this->payload)) {
-                return false;
-            }
-        }
-
-        return true;
+        return false;
     }
 
     /**
