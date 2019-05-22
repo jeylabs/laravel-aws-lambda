@@ -40,7 +40,14 @@ class Gateway extends Handler
     {
         $uri = $this->prepareUrlForRequest($app);
         $request = $this->createRequest($uri);
-        $response = $this->runThroughKernel($app, $request);
+
+        if (is_bool(strpos($app->version(), 'Lumen'))) {
+            $response = $this->runThroughKernel($app, $request);
+        } else {
+            $response = $app->prepareResponse(
+                $app->handle($request)
+            );
+        }
 
         return $this->prepareResponse($response);
     }
@@ -68,7 +75,7 @@ class Gateway extends Handler
     /**
      * Create request from URI
      *
-     * @param string$uri
+     * @param string $uri
      * @return Request
      */
     protected function createRequest($uri)
@@ -134,7 +141,7 @@ class Gateway extends Handler
     /**
      * Transform headers array to array of $_SERVER vars with HTTP_* format.
      *
-     * @param  array $headers
+     * @param array $headers
      * @return array
      */
     private function transformHeadersToServerVars(array $headers)

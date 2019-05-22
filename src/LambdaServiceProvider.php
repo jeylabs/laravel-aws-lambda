@@ -13,10 +13,18 @@ class LambdaServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $isLaravel = is_bool(strpos($this->app->version(), 'Lumen'));
+
+        if (!$isLaravel) {
+            $this->app->configure('aws-lambda');
+        }
+
         if ($this->app->runningInConsole()) {
-            $this->publishes([
-                __DIR__ . '/../config/aws-lambda.php' => config_path('aws-lambda.php')
-            ], 'aws-lambda-config');
+            if ($isLaravel) {
+                $this->publishes([
+                    __DIR__ . '/../config/aws-lambda.php' => config_path('aws-lambda.php')
+                ], 'aws-lambda-config');
+            }
 
             $this->publishes([
                 __DIR__ . '/../handler/handler.php' => base_path('handler.php')
