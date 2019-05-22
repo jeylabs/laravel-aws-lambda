@@ -70,7 +70,9 @@ foreach ($paths as $path) {
  *    attempts to perform some form of "setup" into one of the storage
  *    directories.
  */
-$app->make(Kernel::class)->bootstrap();
+if (is_bool(strpos($app->version(), 'Lumen'))) {
+    $app->make(Kernel::class)->bootstrap();
+}
 
 /**
  * Declare our handler.
