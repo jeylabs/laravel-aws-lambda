@@ -44,9 +44,7 @@ class Gateway extends Handler
         if (is_bool(strpos($app->version(), 'Lumen'))) {
             $response = $this->runThroughKernel($app, $request);
         } else {
-            $response = $app->prepareResponse(
-                $app->handle($request)
-            );
+            $response = $app->handle($request);
         }
 
         return $this->prepareResponse($response);
@@ -61,7 +59,8 @@ class Gateway extends Handler
      */
     protected function prepareUrlForRequest(Container $app)
     {
-        $baseUrl = $app->make('config')->get('app.url');
+        $config = $app->make('config');
+        $baseUrl = $config->get('app.url');
         $uri = $this->payload['path'];
 
         if (Str::startsWith($uri, '/')) {
@@ -69,7 +68,8 @@ class Gateway extends Handler
         }
 
         $uri = $baseUrl . '/' . $uri;
-        return trim($uri, '/');
+
+        return str_replace($config->get('aws-lambda.prefix'), '', trim($uri, '/'));
     }
 
     /**

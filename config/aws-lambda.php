@@ -18,4 +18,16 @@ return [
         \Jeylabs\LaravelAwsLambda\Handlers\Gateway::class,
     ],
 
+    /*
+   |--------------------------------------------------------------------------
+   | URL resource prefix
+   |--------------------------------------------------------------------------
+   |
+   | API gateway prefix
+   | Resource prefix remove from url
+   | Prepare for response without prefix.
+   |
+   */
+    'prefix' => env('RESOURCE_PREFIX')
+
 ];
